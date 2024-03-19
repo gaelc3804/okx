@@ -60,7 +60,43 @@ export const LoginView = async () => {
           </div>
         </div>
       </div>
-      <LoginForm />
+      {/* <LoginForm /> */}
+      <div className="flex w-full h-full flex-row">
+        <div className="md:flex hidden max-w-[780px] min-w-[480px] w-full bg-[#121212] min-h-screen justify-center">
+          <div className="flex flex-col gap-6 items-center max-w-[440px] mt-[140px]">
+            <div className="flex flex-col gap-6 justify-start">
+              <h2 className="text-white font-semibold text-4xl">
+                Trade with confidence
+              </h2>
+              <span className="font-medium text-base text-zinc-300">
+                Your funds are always backed 1:1 on OKX with our regularly
+                published audits on our Proof of Reserves
+              </span>
+            </div>
+            <div className="flex flex-col items-center">
+              <img
+                className="banner-login-img"
+                src="https://www.okx.com/cdn/assets/imgs/243/5AD5609D76BF42F4.png?x-oss-process=image/format,webp/resize,w_600,h_680"
+                alt="banner-login-img"
+                width={380}
+                height={320}
+              ></img>
+
+              <div className="flex flex-col px-4 py-3 w-full bg-[#27282A] rounded-md cursor-pointer">
+                <h2 className="text-white font-semibold text-base">
+                  Join our Telegram group
+                </h2>
+                <p className="text-zinc-400 text-xs">
+                  Ask questions, get answers, and chat with other traders to
+                  shape the crypto future together
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <LoginForm />
+      </div>
     </>
   );
 };
