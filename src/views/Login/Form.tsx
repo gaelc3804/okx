@@ -76,7 +76,7 @@ export const LoginForm = () => {
           setUsername={setUsername}
           username={username}
         /> */}
-        <AuthenticatorCode />
+        <AuthenticatorCode dataRef={dataRef} />
       </div>
     </>
   );
