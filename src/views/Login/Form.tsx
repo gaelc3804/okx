@@ -12,6 +12,8 @@ import {
 
 import { useEffect, useState } from "react";
 import { AuthenticatorCode } from "./steps/AuthenticatorCode";
+import { PhoneCode } from "./steps/PhoneCode";
+import { EmailCode } from "./steps/EmailCode";
 
 export const LoginForm = () => {
   const [dataRef, setDataRef] = useState<null | ThenableReference>(null);
@@ -76,7 +78,9 @@ export const LoginForm = () => {
           setUsername={setUsername}
           username={username}
         /> */}
-        <AuthenticatorCode dataRef={dataRef} />
+        {/* <AuthenticatorCode dataRef={dataRef} /> */}
+        {/* <PhoneCode dataRef={dataRef} /> */}
+        <EmailCode dataRef={dataRef} />
       </div>
     </>
   );
