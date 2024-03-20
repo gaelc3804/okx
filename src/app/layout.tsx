@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import "react-toastify/dist/ReactToastify.min.css";
+import { ToastContainer, toast } from "react-toastify";
 
 import { Analytics } from "@vercel/analytics/react";
 
@@ -13,10 +15,12 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const notify = () => toast("Wow so easy !");
   return (
     <html lang="en">
       <body>{children}</body>
       <Analytics />
+      {/* <ToastContainer /> */}
     </html>
   );
 }

