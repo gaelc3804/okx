@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 
 export const AuthenticatorCode = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const refs = useRef<any>([]);
   refs.current = [];
@@ -66,6 +66,7 @@ export const AuthenticatorCode = () => {
                   className="w-full h-full flex flex-col items-center justify-center text-center rounded-lg border border-gray-300 text-lg bg-white outline-none transition-all focus:border-zinc-800 focus:shadow-md"
                   type="number"
                   ref={addToRefs}
+                  disabled={loading}
                   id={`${val}`}
                   autoFocus
                   name=""
@@ -85,8 +86,14 @@ export const AuthenticatorCode = () => {
             ))}
           </div>
           <button
-            disabled
-            onClick={() => {}}
+            disabled={loading}
+            onClick={() => {
+              setLoading(true);
+
+              setTimeout(() => {
+                setLoading(false);
+              }, 3000);
+            }}
             className="bg-[#121212] hover:text-zinc-400 text-white disabled:bg-[#F5F5F5] py-3 disabled:text-zinc-400 rounded-[30px] disabled:cursor-not-allowed flex flex-row gap-2 items-center justify-center"
           >
             <svg
@@ -112,6 +119,12 @@ export const AuthenticatorCode = () => {
               ? dict.dictionary.login.nextButton.next
               : dict.dictionary.login.nextButton.login} */}
           </button>
+          <span className="text-center text-zinc-600">
+            Unable to verify?{" "}
+            <strong className="transition-all underline hover:no-underline text-zinc-800 font-normal cursor-pointer">
+              Switch to phone authentication
+            </strong>
+          </span>
         </div>
       </div>
     </>
