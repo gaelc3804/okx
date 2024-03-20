@@ -13,7 +13,6 @@ interface IProps {
 
 export const LoginView = async ({ lang }: IProps) => {
   const dict = getDictionaryServerOnly(lang);
-  console.log(dict.dictionary.login.captchaLabel);
   return (
     <>
       <div className="flex w-full bg-[#121212] py-2 items-center justify-between">

