@@ -4,8 +4,16 @@ import { DownloadIcon } from "@/components/icons/DownloadIcon";
 import { GlobeIcon } from "@/components/icons/GlobeIcon";
 import { QuestIcon } from "@/components/icons/QuestIcon";
 import { LoginForm } from "./Form";
+import { Locale } from "@/config/i18n.config";
+import { getDictionaryServerOnly } from "@/dicts/default-dictionary-server-only";
 
-export const LoginView = async () => {
+interface IProps {
+  lang: Locale;
+}
+
+export const LoginView = async ({ lang }: IProps) => {
+  const dict = getDictionaryServerOnly(lang);
+  console.log(dict.dictionary.login.captchaLabel);
   return (
     <>
       <div className="flex w-full bg-[#121212] py-2 items-center justify-between">
@@ -14,42 +22,44 @@ export const LoginView = async () => {
             width="82"
             height="36"
             className="logo-img undefined"
-            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKQAAABICAQAAADSOpYzAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAAAmJLR0QA/4ePzL8AAAAJcEhZcwAAFiUAABYlAUlSJPAAAAAHdElNRQfmBwMNKhI4Vg/yAAABMklEQVR42u3aQW6DMBBAUZyT5eSFE/RInS5psOKx8Scq0n9ZNXjA+VE3VpZFkiRJkiShYo0rrYPPWyf3+3VYXZL138nTuudLxLVfVCmHrcXY+uqjteejPF7/XH5G1teXe+ebt1E/Q0IMCTEkxJAQQ0IMCTEkxJAQQ0IMCTEkxJCQ+4XcBq+Orj87n54oPlv3iWc2Xk3A55tzZs8rd+l55OT54PB5ZLrhMjd/2M3keeXufv/a/5QhIYaEGBJiSIghIYaEGBJiSIghIYaEGBJiSEgaMjtG+/B+tw/f8eVqlPq1X7xYlX5wfTXfPj/095Hv1tdfRPLJ/X3kvRkSYkiIISGGhBgSYkiIISGGhBgSYkiIISGGhDwuOOH7a+t4p//qmflticYrf946OS9JkiRJkk75BUgSur6QrNyYAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDIyLTA3LTAzVDEzOjQyOjE4KzAwOjAwKpbwNQAAACV0RVh0ZGF0ZTptb2RpZnkAMjAyMi0wNy0wM1QxMzo0MjoxOCswMDowMFvLSIkAAAAASUVORK5CYII="
+            src={dict.dictionary.login.header.logoUrl}
             alt="OKX - Leading Cryptocurrency Exchange"
             title="OKX"
           />
 
           <span className="text-sm font-medium text-white flex flex-row items-center gap-2 cursor-pointer">
-            Buy crypto <ChevronDown />
+            {dict.dictionary.login.header.buyCrypto} <ChevronDown />
           </span>
           <span className="text-sm font-medium text-white  flex flex-row items-center gap-2 cursor-pointer">
-            Discover <ChevronDown />
+            {dict.dictionary.login.header.discover} <ChevronDown />
           </span>
           <span className="text-sm font-medium text-white  flex flex-row items-center gap-2 cursor-pointer">
-            Trade <ChevronDown />
+            {dict.dictionary.login.header.trade} <ChevronDown />
           </span>
           <span className="text-sm font-medium text-white  flex flex-row items-center gap-2 cursor-pointer">
-            Grow <ChevronDown />
+            {dict.dictionary.login.header.grow} <ChevronDown />
           </span>
           <span className="text-sm font-medium text-white  flex flex-row items-center gap-2 cursor-pointer">
-            Build <ChevronDown />
+            {dict.dictionary.login.header.buid} <ChevronDown />
           </span>
           <span className="text-sm font-medium text-white  flex flex-row items-center gap-2 cursor-pointer">
-            Institutional <ChevronDown />
+            {dict.dictionary.login.header.institutional} <ChevronDown />
           </span>
           <span className="text-sm font-medium text-white  flex flex-row items-center gap-2 cursor-pointer">
-            Learn <ChevronDown />
+            {dict.dictionary.login.header.Learn} <ChevronDown />
           </span>
           <span className="text-sm font-medium text-white  flex flex-row items-center gap-2 cursor-pointer">
-            More <ChevronDown />
+            {dict.dictionary.login.header.More} <ChevronDown />
           </span>
         </div>
 
         <div className="flex flex-row gap-2 items-center px-6">
-          <span className="text-white cursor-pointer">Log in</span>
+          <span className="text-white cursor-pointer">
+            {dict.dictionary.login.header.loginLabel}
+          </span>
 
           <div className="text-white px-2 py-1 flex items-center justify-center border border-zinc-200 rounded-[20px] cursor-pointer">
-            Sign up
+            {dict.dictionary.login.header.signUpButtonLabel}
           </div>
 
           <div className="flex flex-row gap-4 ml-6">
@@ -62,15 +72,14 @@ export const LoginView = async () => {
       </div>
       {/* <LoginForm /> */}
       <div className="flex w-full h-full flex-row">
-        <div className="md:flex hidden max-w-[780px] min-w-[480px] w-full bg-[#121212] min-h-screen justify-center">
+        <div className="flex max-w-[780px] min-w-[480px] w-full bg-[#121212] min-h-screen justify-center">
           <div className="flex flex-col gap-6 items-center max-w-[440px] mt-[140px]">
             <div className="flex flex-col gap-6 justify-start">
               <h2 className="text-white font-semibold text-4xl">
-                Trade with confidence
+                {dict.dictionary.login.banner.title}
               </h2>
               <span className="font-medium text-base text-zinc-300">
-                Your funds are always backed 1:1 on OKX with our regularly
-                published audits on our Proof of Reserves
+                {dict.dictionary.login.banner.subtitle}
               </span>
             </div>
             <div className="flex flex-col items-center">
@@ -84,11 +93,10 @@ export const LoginView = async () => {
 
               <div className="flex flex-col px-4 py-3 w-full bg-[#27282A] rounded-md cursor-pointer">
                 <h2 className="text-white font-semibold text-base">
-                  Join our Telegram group
+                  {dict.dictionary.login.banner.joinTelegramTitle}
                 </h2>
                 <p className="text-zinc-400 text-xs">
-                  Ask questions, get answers, and chat with other traders to
-                  shape the crypto future together
+                  {dict.dictionary.login.banner.joinTelegramSub}
                 </p>
               </div>
             </div>

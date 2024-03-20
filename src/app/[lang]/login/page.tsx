@@ -1,10 +1,18 @@
+import { Locale } from "@/config/i18n.config";
+import { getDictionaryServerOnly } from "@/dicts/default-dictionary-server-only";
 import { LoginView } from "@/views/Login/LoginView";
 import Image from "next/image";
 
-export default function Home() {
+interface IProps {
+  params: {
+    lang: Locale;
+  };
+}
+
+export default async function Home({ params: { lang } }: IProps) {
   return (
     <>
-      <LoginView />
+      <LoginView lang={lang} />
     </>
   );
 }

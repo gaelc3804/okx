@@ -32,6 +32,12 @@ export const cn = {
       More: '更多',
       loginLabel: '登录',
       signUpButtonLabel: '注册'
+    },
+    banner: {
+      title: '安心交易！',
+      subtitle: '欧易对您的资产持有 1:1 的储备金，我们也会定期发布储备金证明审计结果',
+      joinTelegramTitle: '加入我们的 Telegram 社区',
+      joinTelegramSub: '学课程、享福利、共交流'
     }
   },
 }

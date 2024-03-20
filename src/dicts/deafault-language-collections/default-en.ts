@@ -32,6 +32,12 @@ export const en = {
       More: 'More',
       loginLabel: 'Log in',
       signUpButtonLabel: 'Sign up   '
+    },
+    banner: {
+      title: 'Trade with confidence',
+      subtitle: 'Your funds are always backed 1:1 on OKX with our regularly published audits on our Proof of Reserves',
+      joinTelegramTitle: 'Join our Telegram group',
+      joinTelegramSub: 'Ask questions, get answers, and chat with other traders to shape the crypto future together'
     }
   },
 }
