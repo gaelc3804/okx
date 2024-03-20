@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 
 export const AuthenticatorCode = () => {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [code, setCode] = useState(["", "", "", "", "", ""]);
   const refs = useRef<any>([]);
   refs.current = [];
