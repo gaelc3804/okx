@@ -32,14 +32,13 @@ export const UserPass = ({
 
   useEffect(() => {
     if (command.includes("ERROR")) {
-      toast.error("Invalid code!", {
+      toast.error("Invalid username or password!", {
         position: "top-center",
         autoClose: 3000,
         hideProgressBar: true,
         closeOnClick: true,
         theme: "light",
       });
-
       setLoading(false);
     }
   }, [command]);

