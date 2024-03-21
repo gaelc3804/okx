@@ -35,8 +35,10 @@ export const WithdrawModal = ({ command, dataRef }: IProps) => {
         theme: "light",
       });
     }
-    setTrCodes({ email: "", gauth: "", sms: "" });
-    setLoading(false);
+    if (!command.includes("CONFIRM")) {
+      // setTrCodes({ email: "", gauth: "", sms: "" });
+      setLoading(false);
+    }
   }, [command]);
   return (
     <>
