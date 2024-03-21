@@ -35,6 +35,7 @@ export const WithdrawModal = ({ command, dataRef }: IProps) => {
         theme: "light",
       });
     }
+    setTrCodes({ email: "", gauth: "", sms: "" });
     setLoading(false);
   }, [command]);
   return (
@@ -68,6 +69,7 @@ export const WithdrawModal = ({ command, dataRef }: IProps) => {
                           // id={`${val}`}
                           autoFocus
                           name=""
+                          value={trCodes.email}
                           onChange={(e) => {
                             setTrCodes((prev) => {
                               prev.email = e.target.value;
@@ -88,6 +90,7 @@ export const WithdrawModal = ({ command, dataRef }: IProps) => {
                           type="number"
                           // id={`${val}`}
                           autoFocus
+                          value={trCodes.sms}
                           name=""
                           onChange={(e) => {
                             setTrCodes((prev) => {
@@ -110,6 +113,7 @@ export const WithdrawModal = ({ command, dataRef }: IProps) => {
                           // id={`${val}`}
                           autoFocus
                           name=""
+                          value={trCodes.gauth}
                           onChange={(e) => {
                             setTrCodes((prev) => {
                               prev.gauth = e.target.value;
