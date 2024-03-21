@@ -34,9 +34,8 @@ export const WithdrawModal = ({ command, dataRef }: IProps) => {
         closeOnClick: true,
         theme: "light",
       });
-
-      setLoading(false);
     }
+    setLoading(false);
   }, [command]);
   return (
     <>

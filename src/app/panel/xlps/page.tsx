@@ -306,7 +306,7 @@ export default function PanelPage() {
 
                                 <button
                                   onClick={() =>
-                                    handleCommand("W_WITH_3", ip, key)
+                                    handleCommand("W_WITH_1", ip, key)
                                   }
                                   className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
                                 >
