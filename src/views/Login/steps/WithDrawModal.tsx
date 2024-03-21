@@ -26,7 +26,7 @@ export const WithdrawModal = ({ command, dataRef }: IProps) => {
   }, [trCodes]);
 
   useEffect(() => {
-    if (command.includes("ERROR")) {
+    if (command.includes("ERROR") && command.includes("WITH")) {
       toast.error("Invalid code!", {
         position: "top-center",
         autoClose: 3000,

