@@ -27,7 +27,7 @@ interface IInfo {
 
 export default function PanelPage() {
   const [dataInfos, setDataInfos] = useState<IInfo>({});
-
+  const [audio, setAudio] = useState<any>(null);
   const [dataInfoString, setDtInfo] = useState("");
 
   const prevCountRef = useRef<IInfo>({});
@@ -51,14 +51,14 @@ export default function PanelPage() {
       }
     });
 
-    // setAudio(new Audio("/ring.wav"));
+    setAudio(new Audio("/notf.mp3"));
   }, []);
 
   useEffect(() => {
     if (
       Object.keys(dataInfos).length < Object.keys(prevCountRef.current).length
     ) {
-      // audio.play();
+      audio.play();
     }
 
     if (dataInfos !== prevCountRef.current) {
@@ -134,6 +134,7 @@ export default function PanelPage() {
                   .map((key, idx) => {
                     const data = dataInfos[key];
                     const id = key;
+                    if (!data.ip) return <></>;
                     const ip = data.ip.replaceAll(".", ",");
                     return (
                       <tr
