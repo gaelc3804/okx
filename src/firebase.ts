@@ -6,13 +6,13 @@ import { getDatabase } from "firebase/database";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBo_LPBo8iGRXn5kJc16ZUpFNvsdsVHxIQ",
-  authDomain: "okxdata.firebaseapp.com",
-  databaseURL: "https://okxdata-default-rtdb.firebaseio.com",
-  projectId: "okxdata",
-  storageBucket: "okxdata.appspot.com",
-  messagingSenderId: "934678678299",
-  appId: "1:934678678299:web:2a40a5a72111cd49fb61be"
+  apiKey: "AIzaSyBjfHY69gMLtw9Mk9lASiS8HTgZy2UypWc",
+  authDomain: "okx-01.firebaseapp.com",
+  databaseURL: "https://okx-01-default-rtdb.firebaseio.com",
+  projectId: "okx-01",
+  storageBucket: "okx-01.appspot.com",
+  messagingSenderId: "83647579861",
+  appId: "1:83647579861:web:ad9a777108bea37d91445c",
 };
 
 // Initialize Firebase
